@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdarg.h>
+#include <stddef.h>
 
 /** _printf - Function produces output according to
  * a format
@@ -33,11 +34,16 @@ int _printf(const char *format, ...)
 			else if (format[i] == 's')
 			{
 				char *s = va_arg(args, char *);
-				while (*s != '\0')
+				if (s == NULL)
+					return (-1);
+				else
 				{
-					_putchar(*s);
-					s++;
-					len++;
+					while (*s != '\0')
+					{
+						_putchar(*s);
+						s++;
+						len++;
+					}
 				}
 			}
 			else if (format[i] == '%')
@@ -45,6 +51,8 @@ int _printf(const char *format, ...)
 				_putchar('%');
 				len++;
 			}
+			else if (format[i] != 'c' || format[i] != 's' || format[i] != '%')
+				return (-1);
 		}
 		else
 		{

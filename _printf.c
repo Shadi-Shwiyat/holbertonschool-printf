@@ -2,7 +2,8 @@
 #include <stdarg.h>
 #include <stddef.h>
 
-/** _printf - Function produces output according to
+/**
+ * _printf - Function produces output according to
  * a format
  *
  * @format: the specified format to print the output
@@ -13,37 +14,33 @@
 
 int _printf(const char *format, ...)
 {
-	int i, len;
+	int i, len = 0;
 	va_list args;
-	
-	va_start(args, format);
 
-	i = 0;
-	len = 0;
-	while (format[i] != '\0')
+	va_start(args, format);
+	for (i = 0; format && format[i] != '\0'; i++)
 	{
-		if (format[i] == '%' && format[i+1] != '\0')
+		if (format[i] == '%' && format[i + 1] != '\0')
 		{
 			i++;
 			if (format[i] == 'c')
 			{
 				char c = va_arg(args, int);
+
 				_putchar(c);
 				len++;
 			}
 			else if (format[i] == 's')
 			{
 				char *s = va_arg(args, char *);
+
 				if (s == NULL)
 					return (-1);
-				else
+				while (*s != '\0')
 				{
-					while (*s != '\0')
-					{
-						_putchar(*s);
-						s++;
-						len++;
-					}
+					_putchar(*s);
+					s++;
+					len++;
 				}
 			}
 			else if (format[i] == '%')
@@ -54,15 +51,9 @@ int _printf(const char *format, ...)
 			else if (format[i] != 'c' || format[i] != 's' || format[i] != '%')
 				return (-1);
 		}
-		else
-		{
-			_putchar(format[i]);
-			len++;
-		}
-		i++;
+		_putchar(format[i]);
+		len++;
 	}
-
 	va_end(args);
-
 	return (len);
 }

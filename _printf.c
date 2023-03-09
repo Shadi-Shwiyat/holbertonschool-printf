@@ -1,5 +1,30 @@
 #include "main.h"
 #include <stdarg.h>
+ /**
+  * get_func - pointer to array
+  * @conv_spec: specifiers
+  * Return: function that is pointed to
+  */
+
+int (*get_func(char conv_spec))(va_list)
+{
+	int j;
+
+	printer_t funct[] = {
+		{"i", print_nums},
+		{"c", conv_c},
+		{"s", conv_s},
+		{"d", print_nums},
+		{NULL, NULL}
+	};
+	for (j = 0; funct[j].spec[0] != conv_spec; j++)
+	{
+		if (funct[j].spec == NULL)
+			return (NULL);
+	}
+	return (funct[j].func);
+}
+
 
 /** _printf - Function produces output according to
  * a format

@@ -29,6 +29,7 @@ int _printf(const char *format, ...)
 
 				_putchar(c);
 				len++;
+				i++;
 			}
 			else if (format[i] == 's')
 			{
@@ -42,11 +43,13 @@ int _printf(const char *format, ...)
 					s++;
 					len++;
 				}
+				i++;
 			}
 			else if (format[i] == '%')
 			{
 				_putchar('%');
 				len++;
+				i++;
 			}
 			else if (format[i] != 'c' || format[i] != 's' || format[i] != '%')
 				return (-1);

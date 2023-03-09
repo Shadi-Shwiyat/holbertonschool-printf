@@ -1,0 +1,103 @@
+.\" Manpage for _printf
+.\" Created by Alex and Shadi
+.TH _printf "03 09 2023" "1.0" "_printf man page"
+.SH NAME
+_printf \- formatted output conversion
+.SH SYNOPSIS
+.P
+#include "main.h"
+.P
+int _printf(const char *format, ...);
+.SH DESCRIPTION
+The _printf() produces output according to a format as described below.The _printf() function writes output to stdout, the standard output stream under the control of a format string that specifies how the following arguments are converted for output.
+.B
+Format of the format string.
+.P
+The format string is a character string that is composed of zero or more directives that consist of ordinary characters and conversion specifications.
+.P
+Ordinary characters (not after a %) are copied unchanged to the output stream.
+.P
+Conversion specifications consist of a % and a conversion specifier. Each conversion specification is attached to zero or more arguments that follow.
+.SH
+CONVERSION SPECIFIERS
+.P
+A conversion specifier is character that specifies the type of conversion to be applied. The conversion specifiers and their meanings are:
+.TP
+.BR \%d ", " \%i
+The int argument is converted to signed decimal notation.
+.TP
+.BR \%u
+The unsigned int is converted to unsigned decimal notation.
+.TP
+.BR \%o
+The unsigned int argument is converted into an equivalent octal number, meaning a number with base value 10 is converted to base value 8. The base value of a number system determines the number of digits used to represent a numeric value. The octal number system uses 8 digits from 0-7.
+.TP
+.BR \%b
+The unsigned int argument is converted into an equivalent binary number, meaning a number with base value 10 is converted to base value 2. The base value of a number system determines the number of digits used to represent a numeric value. Binary uses two digits 0 and 1.
+.TP
+.BR \%x
+The unsigned int argument is converted to hexadecimal notation, meaning a number with base value 10 is converted to base value 16. The lowercase letters abcdef are used for this conversion. In the C programming language, a hexadecimal number is a value made up of 16 symbols, 10 from the standard numerical system from 0 to 9 in addition to a to f.
+.TP
+.BR \%X
+The unsigned int argument is converted to hexadecimal notation, meaning a number with base value 10 is converted to base value 16. The uppercase characters ABCDF are used for this conversion. In the C programming language, a hexadecimal number is a value made up of 16 symbols, 10 from the standard numerical system from 0 to 9 in addition to A to F.
+.TP
+.BR \%c
+The int argument is converted to an unsigned char, and the resulting character is written.
+.TP
+.BR \%s
+The const char * argument is expected to be a pointer to an array of character type (pointer to a string). Characters from the array are written up to (but not including) a terminating null byte ('\0').
+.TP
+.BR \%R
+The const char * argument is encoded using ROT13. ROT13 rotates each character by 13 places in a simple letter substitution ciper that replaces a letter with the 13th letter before or after it in the alphabet.
+.TP
+.BR \%%
+The % conversion specifier is used when the user wants to print a percent sign to the terminal.
+.SH
+RETURN VALUE
+.P
+Upon successful return, these functions return the number of characters printed (excluding the null byte used to end output to strings). In order to find the return of your output, you could do something like this:
+.P
+	#include "holberton.h"
+.P
+	int len = 0;
+.P
+	len = _printf("Wesley is a fat cat");
+.P
+	_printf("%d", len);
+.P
+where the conversion specifier d, assigned to len, is printing the return data from the _printf statement above it.
+.P
+If an output error is encountered, a negative value is returned.
+.SH
+NOTES
+.P
+Our program does not handle flag characters, such as +, space, #, and any type of precision flags.
+.P
+Buffers are not implemented in our program.
+.SH
+EXAMPLES
+.P
+To print a date and time:
+.P
+	#include "holberton.h"
+.P
+	_printf("%s%s%d%d%d", weekday, month, day, hour, min);
+.P
+print out a string:
+.P
+	#include "holberton.h"
+.P
+	_printf("This is the string I want printed");
+.P
+	_printf("%s", str);
+.P
+convert to binary:
+.P
+	#include "holberton.h"
+.P
+	printf("%b", non_binary);
+.P
+everything is converted to binary using the b conversion specifier.
+.SH
+COLOPHON
+.P

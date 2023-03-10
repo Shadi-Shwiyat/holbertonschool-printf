@@ -37,6 +37,11 @@ int print_nums(va_list arg)
 	return (count);
 }
 
+/**
+ * print_more - prints
+ *
+ *
+ */
 int print_more(int j)
 {
 	if ((j / 10) != 0)

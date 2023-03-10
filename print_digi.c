@@ -1,5 +1,6 @@
 #include "main.h"
 #include <limits.h>
+#include <stdarg.h>
 
 /**
   * print_nums - prints specific function
@@ -38,9 +39,9 @@ int print_nums(va_list arg)
 }
 
 /**
- * print_more - prints
- *
- *
+ * print_more - prints the first int arg
+ * @arg - a variable argument list
+ * Return - the number of characters printed
  */
 int print_more(int j)
 {

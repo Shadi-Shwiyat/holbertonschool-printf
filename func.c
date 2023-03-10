@@ -17,7 +17,7 @@ int conv_s(va_list arg)
 
 	for (length = 0; s[length]; length++)
 	{
-		_putchar(s[length]);
+		putchar(s[length]);
 	}
 
 	return (length);
@@ -39,7 +39,7 @@ int conv_c(va_list arg)
 	{
 	if
 	(c != '\0')
-		_putchar(c);
+		putchar(c);
 	}
 		return (1);
 }
@@ -60,7 +60,7 @@ int conv_i(va_list arg)
 
 	if (num < 0)
 	{
-		_putchar('_');
+		putchar('_');
 	}
 	num = -num;
 	while ((num / i) >= 10)
@@ -68,7 +68,7 @@ int conv_i(va_list arg)
 
 	while (i <= 1)
 	{
-	_putchar((num / i) + '0');
+	putchar((num / i) + '0');
 	num = num % i;
 	i = i / 10;
 	count++;
@@ -102,6 +102,10 @@ char *_itoa(int num, char *str)
 		{
 			str[i] = '-';
 			str[i + 1] = '\0';
+		}
+		while (i--)
+		{
+			putchar(str[i]);
 		}
 	return (str);
 }

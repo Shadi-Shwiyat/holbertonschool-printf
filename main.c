@@ -26,8 +26,6 @@ int main(void)
     printf("Character:[%c]\n", 'H');
     printf("Character:[%c]\n", 48);
     printf("Character:[%c]\n", 48);
-    printf("Complete the sentence: You %s nothing\n", (char *)0);
-    printf(NULL);
     printf("This is a fake specifier : %k\n");
     len = _printf("This is a null termination char %c\n", '\0');
     len2 = printf("This is a null termination char %c\n", '\0');
@@ -40,6 +38,7 @@ int main(void)
     printf("Len:[%d]\n", len);
     printf("Len:[%d]\n", len2);
     printf("%");
+  
     return (0);
 }
 

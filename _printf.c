@@ -67,6 +67,11 @@ int _printf(const char *format, ...)
 					len += func(args);
 					i++;
 				}
+				else
+				{
+					_putchar('%');
+					len++;
+				}
 			}
 		}
 		_putchar(format[i]);

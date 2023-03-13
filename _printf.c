@@ -28,7 +28,8 @@ int (*get_func(char conv_spec))(va_list)
 }
 
 /**
- * _printf - Prints formatted output
+ * _printf - Function produces output according to
+ * a format
  *
  * @format: String containing format specifiers
  *
@@ -64,7 +65,6 @@ int _printf(const char *format, ...)
 					len += func(args);
 					i++;
 				}
-
 			}
 		}
 		_putchar(format[i]);

@@ -1,6 +1,6 @@
 #include "main.h"
 #include <stdarg.h>
-
+#include <stdlib.h>
 /**
   * _itoa - converts int to char
   * @str: argument
@@ -10,24 +10,25 @@
 char *_itoa(int num, char *str)
 {
     int i = 0;
+    int j, k;
     char negative;
 
     if (num < 0)
     {
         negative = 1;
-        num = num * -1;
+        num = -num;
     }
     else
     {
         negative = 0;
     }
 
-    while (num > 0)
+    do
     {
         str[i] = num % 10 + '0';
         num = num / 10;
         i++;
-    }
+    } while (num != 0);
 
     if (negative)
     {
@@ -37,13 +38,15 @@ char *_itoa(int num, char *str)
 
     str[i] = '\0';
 
-    while (i--)
+    for (j = 0, k = i - 1; j < k; j++, k--)
     {
-	    _putchar(str[i]);
+        char temp = str[j];
+        str[j] = str[k];
+        str[k] = temp;
     }
-    return (str);
-}
 
+    return str;
+}
 /**
  * print_nums - prints numbers
  * @arg: va_list containing the argument to print
@@ -52,11 +55,11 @@ char *_itoa(int num, char *str)
 int print_nums(va_list arg)
 {
 	int num = va_arg(arg, int);
-	char str[20];
+	char str[12];
 	char *s = _itoa(num, str);
 	int len = 0;
 
-	while (*s)
+	while (*s != '\0')
 	{
 		len += _putchar(*s);
 		s++;

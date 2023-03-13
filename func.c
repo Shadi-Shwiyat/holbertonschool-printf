@@ -2,81 +2,6 @@
 #include <stdarg.h>
 
 /**
- * conv_s - prints a string
- * @arg: format
- *
- * Return: string
- */
-int conv_s(va_list arg)
-{
-	int length;
-	char *s = va_arg(arg, char *);
-
-	if (s == NULL)
-		s = "(null)";
-
-	for (length = 0; s[length]; length++)
-	{
-		putchar(s[length]);
-	}
-
-	return (length);
-}
-
-
-/**
- * conv_c - prints a character to standard output
- * @arg: list of arguments
- *
- * Return: an integer
- */
-int conv_c(va_list arg)
-{
-	char c = (char)va_arg(arg, int);
-
-	if (!c)
-		return (0);
-	{
-	if
-	(c != '\0')
-		putchar(c);
-	}
-		return (1);
-}
-
-/**
- * conv_i - prints an intger
- * @arg: integer
- *
- * Return: none
- */
-int conv_i(va_list arg)
-{
-	int num;
-	int i = 1;
-	int count = 0;
-
-	num = va_arg(arg, int);
-
-	if (num < 0)
-	{
-		putchar('_');
-	}
-	num = -num;
-	while ((num / i) >= 10)
-		i = i * 10;
-
-	while (i <= 1)
-	{
-	putchar((num / i) + '0');
-	num = num % i;
-	i = i / 10;
-	count++;
-	}
-	return (count);
-}
-
-/**
   * _itoa - converts int to char
   * @str: argument
   * @num: int
@@ -84,28 +9,95 @@ int conv_i(va_list arg)
   */
 char *_itoa(int num, char *str)
 {
-	int i = 0;
-	char negative;
+    int i = 0;
+    char negative;
 
-	if (num < 0)
+    if (num < 0)
+    {
+        negative = 1;
+        num = num * -1;
+    }
+    else
+    {
+        negative = 0;
+    }
+
+    while (num > 0)
+    {
+        str[i] = num % 10 + '0';
+        num = num / 10;
+        i++;
+    }
+
+    if (negative)
+    {
+        str[i] = '-';
+        i++;
+    }
+
+    str[i] = '\0';
+
+    while (i--)
+    {
+	    _putchar(str[i]);
+    }
+    return (str);
+}
+
+/**
+ * print_nums - prints numbers
+ * @arg: va_list containing the argument to print
+ * Return: the number of characters printed
+ */
+int print_nums(va_list arg)
+{
+	int num = va_arg(arg, int);
+	char str[20];
+	char *s = _itoa(num, str);
+	int len = 0;
+
+	while (*s)
 	{
-		negative = 1;
-		num = num * -1;
+		len += _putchar(*s);
+		s++;
 	}
-		while (num > 0)
-		{
-			str[i] = num % 10 + '0';
-			num = num / 10;
-			i++;
-		}
-		if (negative)
-		{
-			str[i] = '-';
-			str[i + 1] = '\0';
-		}
-		while (i--)
-		{
-			putchar(str[i]);
-		}
-	return (str);
+
+	return (len);
+}
+
+/**
+ * print_c - prints characters
+ * @arg: va_list containing the argument to print
+ * Return: the number of characters printed
+ */
+int print_c(va_list arg)
+{
+	char c = va_arg(arg, int);
+
+	_putchar(c);
+
+	return (1);
+}
+
+/**
+ * print_s - prints strings
+ * @arg: va_list containing the argument to print
+ * Return: the number of characters printed
+ */
+int print_s(va_list arg)
+{
+	char *str = va_arg(arg, char*);
+	int len = 0;
+
+	if (str == NULL)
+		str = "(null)";
+
+	while (*str)
+	{
+		_putchar(*str);
+		len++;
+		str++;
+	}
+
+	return (len);
 }

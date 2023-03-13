@@ -1,9 +1,10 @@
 #include "main.h"
 #include <stdarg.h>
+#include <string.h>
 
 /**
   * get_func - pointer to array
-  * @conv_spec: specifiers
+  * @conv_spec: specifiers0
   * Return: function that is pointed to
   */
 
@@ -13,17 +14,17 @@ int (*get_func(char conv_spec))(va_list)
 
 	printer_t funct[] = {
 		{"i", print_nums},
-		{"c", conv_c},
-		{"s", conv_s},
+		{"c", print_c},
+		{"s", print_s},
 		{"d", print_nums},
 		{NULL, NULL}
 	};
-	for (j = 0; funct[j].spec[0] != conv_spec; j++)
+	for (j = 0; funct[j].spec != NULL; j++)
 	{
-		if (funct[j].spec == NULL)
-			return (NULL);
+		if (conv_spec == *(funct[j].spec))
+			return (funct[j].func);
 	}
-	return (funct[j].func);
+	return (NULL);
 }
 
 /**
@@ -33,55 +34,42 @@ int (*get_func(char conv_spec))(va_list)
  *
  * Return: Length of the printed string
  */
+
 int _printf(const char *format, ...)
 {
-	int i, len;
+	int i, len = 0;
 	va_list args;
+	int (*func)(va_list);
 
 	va_start(args, format);
+	if (format == NULL)
+		return (-1);
 
-	i = 0;
-	len = 0;
-	while (format[i] != '\0')
+	for (i = 0; format[i] != '\0'; i++)
 	{
-	if (format[i] == '%' && format[i + 1] != '\0')
-	{
-	i++;
-	if (format[i] == 'c')
-	{
-	char c = va_arg(args, int);
-	putchar(c);
-	len++;
-	}
-	else if (format[i] == 's')
-	{
-	char *s = va_arg(args, char *);
-	while (*s != '\0')
-	{
-	putchar(*s);
-	s++;
-	len++;
-	}
-	}
-	else if (format[i] == '%')
-	{
-	putchar('%');
-	len++;
-	}
-	else
-	{
-	putchar(format[i]);
-	len++;
-	}
-	}
-	else
-	{
-	putchar(format[i]);
-	len++;
-	}
-	i++;
+		if (format[i] == '%')
+		{
+			i++;
+			if (format[i] == '%')
+			{
+				_putchar('%');
+				len++;
+				i++;
+			}
+			else
+			{
+				func = get_func(format[i]);
+				if (func != NULL)
+				{
+					len += func(args);
+					i++;
+				}
+
+			}
+		}
+		_putchar(format[i]);
+		len++;
 	}
 	va_end(args);
 	return (len);
 }
-

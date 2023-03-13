@@ -41,6 +41,7 @@ int print_nums(va_list arg)
 /**
  * print_more - prints the first int arg
  * @arg - a variable argument list
+ * @j -int for print more
  * Return - the number of characters printed
  */
 int print_more(int j)
@@ -51,5 +52,5 @@ int print_more(int j)
 	}
 		putchar('0' + (j % 10));
 
-	return (0);
+	return (1);
 }

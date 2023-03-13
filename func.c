@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdarg.h>
 #include <stdlib.h>
+#include <limits.h>
 /**
   * _itoa - converts int to char
   * @str: argument
@@ -13,33 +14,40 @@ char *_itoa(int num, char *str)
     int j, k;
     char negative;
 
-    if (num < 0)
-    {
+    if (num == INT_MIN) {
+        str[i] = '-';
+        i++;
+        num = -(num + 1) + 1;
+    }
+
+    if (num == 0) {
+        str[i] = '0';
+        i++;
+        str[i] = '\0';
+        return str;
+    }
+
+    if (num < 0) {
         negative = 1;
         num = -num;
-    }
-    else
-    {
+    } else {
         negative = 0;
     }
 
-    do
-    {
+    while (num != 0) {
         str[i] = num % 10 + '0';
         num = num / 10;
         i++;
-    } while (num != 0);
+    }
 
-    if (negative)
-    {
+    if (negative) {
         str[i] = '-';
         i++;
     }
 
     str[i] = '\0';
 
-    for (j = 0, k = i - 1; j < k; j++, k--)
-    {
+    for (j = 0, k = i - 1; j < k; j++, k--) {
         char temp = str[j];
         str[j] = str[k];
         str[k] = temp;

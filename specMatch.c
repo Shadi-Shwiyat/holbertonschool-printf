@@ -9,8 +9,7 @@ int get_printf(const char c, va_list ap)
 {
 	int i = 0;
 	int j = 0;
-	print_t type[] =
-	{
+	print_t type[] = {
 		{'c', pchar},
 		{'s', pstr},
 		{'%', pperc},
@@ -19,7 +18,7 @@ int get_printf(const char c, va_list ap)
 	};
 
 
-	
+
 	while (type[i].t != 0)
 	{
 		if (type[i].t == c)

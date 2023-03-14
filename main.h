@@ -1,35 +1,28 @@
 #ifndef MAIN_H
 #define MAIN_H
-#include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <stdarg.h>
-#include <stddef.h>
-#include <limits.h>
 #include <string.h>
+#include <unistd.h>
 
 /**
-* struct specifiers - structure to find the correct function
-* and specifiers
-* @letter: specifier conversion
-* @handle: function
-*
-*/
-
-typedef struct specifiers
+ * struct print - Struct op
+ *
+ * @t: The operator
+ * @f: The function associated
+ */
+typedef struct print
 {
-	char *letter;
-	int (*handle)(va_list);
-} function_t;
+	char t;
+	int (*f)(va_list);
+} print_t;
 
 int _printf(const char *format, ...);
-int _putchar(char c);
-int handle_character(va_list args);
-int handle_string(va_list args);
-int handle_percent(__attribute__((unused))va_list args);
-int (*get_function(const char *specifier))(va_list);
-int print_number(unsigned int n);
-int countDigits(unsigned int num);
-int _strlen(char *str);
+int get_printf(const char c, va_list ap);
 
+int pchar(va_list arg);
+int pstr(va_list arg);
+int pperc(va_list arg);
+int pint(va_list arg);
 #endif

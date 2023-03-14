@@ -1,58 +1,77 @@
 #include "main.h"
-
 /**
-* handle_character - character specifier
-* handle_string - string specifier
-* @args: argument list containing the char to printas the next element
-* Return: number of bytes printed
-*/
-
-int handle_character(va_list args)
+ * pchar - return char
+ * @arg: arg
+ * Return: 1 on success
+ */
+int pchar(va_list arg)
 {
-	char c = va_arg(args, int);
-	int count = 0, retval;
-
-	retval = _putchar(c);
-	if (retval == -1)
-		return (-1);
-	count++;
-
-	return (count);
-}
-
-/**
-* handle_string - string specifier
-* @args: argument list
-* Return: number of bytes printed
-*/
-int handle_string(va_list args)
-{
-	char *s = va_arg(args, char*);
-	int count = 0;
-	int retval;
-
-	if (!s)
-		s = "(null)";
-
-	while (*s)
-	{
-		retval = _putchar(*s);
-		if (retval == -1)
-			return (-1);
-		count++;
-		s++;
-	}
-	return (count);
-}
-
-/**
-* handle_percent - pervcent specifier
-* @args: argument list
-* Return: 1
-*/
-
-int handle_percent(__attribute__((unused))va_list args)
-{
-	_putchar('%');
+	putchar(va_arg(arg, int));
 	return (1);
 }
+
+/**
+ * pstr - return an str
+ * @arg: var to write
+ * Return: string
+ */
+int pstr(va_list arg)
+{
+	int i = 0;
+	char *s = va_arg(arg, char *);
+
+	if (s == NULL)
+		s = "(null)";
+	while (s[i] != '\0')
+	{
+		putchar(s[i]);
+		i++;
+	}
+	return (i);
+}
+
+/**
+ * pperc - return per
+ * @arg: arg
+ * Return: per
+ */
+int pperc(va_list arg)
+{
+	(void)arg;
+	putchar('%');
+	return (1);
+}
+
+/**
+ * pint - retun an int
+ * @arg: arg
+ * Return: len
+ */
+int pint(va_list arg)
+{
+	int n = va_arg(arg, int);
+	int d, len;
+	unsigned int num;
+
+	d = 1;
+	len = 0;
+	num = n;
+	if (n < 0)
+	{
+		putchar('-');
+		len++;
+		num = -n;
+	}
+
+	while (num / d > 9)
+		d *= 10;
+	while (d != 0)
+	{
+		putchar('0' + num / d);
+		len++;
+		num %= d;
+		d /= 10;
+	}
+	return (len);
+}
+

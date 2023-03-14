@@ -1,82 +1,82 @@
 #include "main.h"
-#include <stdarg.h>
-#include <string.h>
 
 /**
-  * get_func - pointer to array
-  * @conv_spec: specifiers0
-  * Return: function that is pointed to
-  */
+* get_function - determine which print function to use
+* @specifier: the character that identifies the type of
+* variable to print
+* getspecifier is a pointer to specifiers from printf.c
+* Return: type[i].getspecifier if handle is found
+*/
 
-int (*get_func(char conv_spec))(va_list)
+int (*get_function(const char *specifier))(va_list)
 {
-	int j;
+	int idx;
 
-	printer_t funct[] = {
-		{"i", print_nums},
-		{"c", print_c},
-		{"s", print_s},
-		{"d", print_nums},
+	function_t types[] = {
+
+		{"c", handle_character},
+		{"s", handle_string},
+		{"%", handle_percent},
 		{NULL, NULL}
 	};
-	for (j = 0; funct[j].spec != NULL; j++)
+	for (idx = 0; types[idx].letter; idx++)
 	{
-		if (conv_spec == *(funct[j].spec))
-			return (funct[j].func);
+		if (*specifier == types[idx].letter[0])
+			return (types[idx].handle);
 	}
 	return (NULL);
 }
 
 /**
- * _printf - Function produces output according to
- * a format
- *
- * @format: String containing format specifiers
- *
- * Return: Length of the printed string
- */
+* _printf - prints a formatted string to output
+*
+* @format: input string to format with specifiers to print
+*
+* Return: number of characters printed
+*/
 
 int _printf(const char *format, ...)
 {
-	int i, len = 0;
+	int count = 0;
 	va_list args;
-	int (*func)(va_list);
+	int (*function)(va_list) = NULL;
 
 	va_start(args, format);
-	if (format == NULL)
-		return (-1);
 
-	for (i = 0; format[i] != '\0'; i++)
+	while (*format)
 	{
-		if (format[i] == '%' && format[i + 1] == '\0')
-			return (-1);
-		if (format[i] == '%')
+		if (*format == '%' && *(format + 1) != '%')
 		{
-			i++;
-			if (format[i] == '%')
+			format++;
+			function = get_function(format);
+			if (*(format) == '\0')
+				return (-1);
+
+			else if (function == NULL)
 			{
-				_putchar('%');
-				len++;
-				i++;
+				_putchar(*(format - 1));
+				_putchar(*format);
+				count += 2;
 			}
 			else
-			{
-				func = get_func(format[i]);
-				if (func != NULL)
-				{
-					len += func(args);
-					i++;
-				}
-				else
-				{
-					_putchar('%');
-					len++;
-				}
-			}
+
+				count += function(args);
+
 		}
-		_putchar(format[i]);
-		len++;
+		else if (*format == '%' && *(format + 1) == '%')
+		{
+			format++;
+			_putchar('%');
+			count++;
+		}
+		else
+		{
+			_putchar(*format);
+			count++;
+		}
+
+			format++;
 	}
 	va_end(args);
-	return (len);
+	return (count);
 }

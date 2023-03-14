@@ -1,29 +1,35 @@
 #ifndef MAIN_H
 #define MAIN_H
-
 #include <stdlib.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdarg.h>
+#include <stddef.h>
+#include <limits.h>
+#include <string.h>
 
 /**
-  * struct printer - instructs for _printf
-  * @spec: specifier to id and print
-  * @func: list of functions
-  */
+* struct specifiers - structure to find the correct function
+* and specifiers
+* @letter: specifier conversion
+* @handle: function
+*
+*/
 
-typedef struct printer
+typedef struct specifiers
 {
-	char *spec;
-	int (*func)(va_list);
+	char *letter;
+	int (*handle)(va_list);
+} function_t;
 
-} printer_t;
-
-int (*get_func(char conv_spec))(va_list);
 int _printf(const char *format, ...);
 int _putchar(char c);
-int print_s(va_list arg);
-int print_c(va_list arg);
-char *_itoa(int num, char *str);
-int print_nums(va_list);
+int handle_character(va_list args);
+int handle_string(va_list args);
+int handle_percent(__attribute__((unused))va_list args);
+int (*get_function(const char *specifier))(va_list);
+int print_number(unsigned int n);
+int countDigits(unsigned int num);
+int _strlen(char *str);
+
 #endif

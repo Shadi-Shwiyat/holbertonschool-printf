@@ -1,7 +1,7 @@
 # holbertonschool-printf
 Printf function developed for a Holberton school project
 
-Function that produces output according to a format, using the format specifiers %s, %c, %d, and %i.
+Function that produces output according* to a format, using the format specifiers %s, %c, %d, and %i.
 
 ./GUIDELINES
 Use the prototype: *int _printf(const char _format, ...);

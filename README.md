@@ -6,7 +6,7 @@ Function that produces output according to a format, using the format specifiers
 ./GUIDELINES
 Use the prototype: *int _printf(const char _format, ...);
 
-Print all of format to std output and handle the conversion specifiers: "c", "s", "%", "d", and "i"
+Print all of format* to std output and handle the conversion specifiers: "c", "s", "%", "d", and "i"
 
 Returns the number of characters printed
 written in vi, vim, or emacs

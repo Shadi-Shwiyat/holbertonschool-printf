@@ -1,111 +1,77 @@
 #include "main.h"
-#include <stdarg.h>
+/**
+ * pchar - return char
+ * @arg: arg
+ * Return: 1 on success
+ */
+int pchar(va_list arg)
+{
+	putchar(va_arg(arg, int));
+	return (1);
+}
 
 /**
- * conv_s - prints a string
- * @arg: format
- *
+ * pstr - return an str
+ * @arg: var to write
  * Return: string
  */
-int conv_s(va_list arg)
+int pstr(va_list arg)
 {
-	int length;
+	int i = 0;
 	char *s = va_arg(arg, char *);
 
 	if (s == NULL)
 		s = "(null)";
-
-	for (length = 0; s[length]; length++)
+	while (s[i] != '\0')
 	{
-		putchar(s[length]);
+		putchar(s[i]);
+		i++;
 	}
-
-	return (length);
+	return (i);
 }
 
-
 /**
- * conv_c - prints a character to standard output
- * @arg: list of arguments
- *
- * Return: an integer
+ * pperc - return per
+ * @arg: arg
+ * Return: per
  */
-int conv_c(va_list arg)
+int pperc(va_list arg)
 {
-	char c = (char)va_arg(arg, int);
-
-	if (!c)
-		return (0);
-	{
-	if
-	(c != '\0')
-		putchar(c);
-	}
-		return (1);
+	(void)arg;
+	putchar('%');
+	return (1);
 }
 
 /**
- * conv_i - prints an intger
- * @arg: integer
- *
- * Return: none
+ * pint - retun an int
+ * @arg: arg
+ * Return: len
  */
-int conv_i(va_list arg)
+int pint(va_list arg)
 {
-	int num;
-	int i = 1;
-	int count = 0;
+	int n = va_arg(arg, int);
+	int d, len;
+	unsigned int num;
 
-	num = va_arg(arg, int);
-
-	if (num < 0)
+	d = 1;
+	len = 0;
+	num = n;
+	if (n < 0)
 	{
-		putchar('_');
+		putchar('-');
+		len++;
+		num = -n;
 	}
-	num = -num;
-	while ((num / i) >= 10)
-		i = i * 10;
 
-	while (i <= 1)
+	while (num / d > 9)
+		d *= 10;
+	while (d != 0)
 	{
-	putchar((num / i) + '0');
-	num = num % i;
-	i = i / 10;
-	count++;
+		putchar('0' + num / d);
+		len++;
+		num %= d;
+		d /= 10;
 	}
-	return (count);
+	return (len);
 }
 
-/**
-  * _itoa - converts int to char
-  * @str: argument
-  * @num: int
-  * Return: ints converted to char
-  */
-char *_itoa(int num, char *str)
-{
-	int i = 0;
-	char negative;
-
-	if (num < 0)
-	{
-		negative = 1;
-		num = num * -1;
-	}
-		while (num > 0)
-		{
-			str[i] = num % 10 + '0';
-			num = num / 10;
-			i++;
-		}
-		if (negative)
-		{
-			str[i] = '-';
-			str[i + 1] = '\0';
-		}
-		while (i--)
-		{
-			putchar(str[i]);
-		}
-	return (str);
-}

@@ -1,31 +1,28 @@
 #ifndef MAIN_H
 #define MAIN_H
-
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 /**
-  * struct printer - instructs for _printf
-  * @spec: specifier to id and print
-  * @func: list of functions
-  */
-
-typedef struct printer
+ * struct print - Struct op
+ *
+ * @t: The operator
+ * @f: The function associated
+ */
+typedef struct print
 {
-	char *spec;
-	int (*func)(va_list);
+	char t;
+	int (*f)(va_list);
+} print_t;
 
-} printer_t;
-
-int (*get_func(char conv_spec))(va_list);
 int _printf(const char *format, ...);
-int _putchar(char c);
-int conv_s(va_list arg);
-int conv_c(va_list arg);
-int print_more(int j);
-int conv_i(va_list arg);
-char *_itoa(int num, char *str);
-int print_nums(va_list);
+int get_printf(const char c, va_list ap);
+
+int pchar(va_list arg);
+int pstr(va_list arg);
+int pperc(va_list arg);
+int pint(va_list arg);
 #endif

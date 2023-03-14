@@ -1,86 +1,48 @@
 #include "main.h"
-#include <stdarg.h>
-
 /**
-  * get_func - pointer to array
-  * @conv_spec: specifiers
-  * Return: function that is pointed to
-  */
-
-int (*get_func(char conv_spec))(va_list)
-{
-	int j;
-
-	printer_t funct[] = {
-		{"i", print_nums},
-		{"c", conv_c},
-		{"s", conv_s},
-		{"d", print_nums},
-		{NULL, NULL}
-	};
-	for (j = 0; funct[j].spec[0] != conv_spec; j++)
-	{
-		if (funct[j].spec == NULL)
-			return (NULL);
-	}
-	return (funct[j].func);
-}
-
-/**
- * _printf - Prints formatted output
- *
- * @format: String containing format specifiers
- *
- * Return: Length of the printed string
+ * _printf - a typical printf
+ * @format: is a character string
+ * Return: the number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	int i, len;
-	va_list args;
 
-	va_start(args, format);
+	int i = 0, j = 0, a = 0;
+	va_list ap;
 
-	i = 0;
-	len = 0;
-	while (format[i] != '\0')
+	if (format == NULL || (strlen(format) == 1 && format[0] == '%'))
 	{
-	if (format[i] == '%' && format[i + 1] != '\0')
+		return (-1);
+	}
+	va_start(ap, format);
+	while (format && format[i])
 	{
-	i++;
-	if (format[i] == 'c')
-	{
-	char c = va_arg(args, int);
-	putchar(c);
-	len++;
+		if (format[i] != '%')
+		{
+			putchar(format[i]);
+			j++;
+		}
+		if (format[i] == '%' && format[i + 1] != 'K' && format[i + 1] != '!')
+		{
+			a = get_printf(*(format + (i + 1)), ap);
+			if (a != 0)
+				j = j + a;
+			i = i + 2;
+			continue;
+			if (*(format + (i + 1)) == '\0')
+			{
+				putchar(format[i]);
+				j++;
+			}
+		}
+		else if ((format[i] == '%' && format[i + 1] == 'K') ||
+		 (format[i] == '%' && format[i + 1] == '!'))
+		{
+			putchar(format[i]);
+			j++;
+		}
+		i++;
 	}
-	else if (format[i] == 's')
-	{
-	char *s = va_arg(args, char *);
-	while (*s != '\0')
-	{
-	putchar(*s);
-	s++;
-	len++;
-	}
-	}
-	else if (format[i] == '%')
-	{
-	putchar('%');
-	len++;
-	}
-	else
-	{
-	putchar(format[i]);
-	len++;
-	}
-	}
-	else
-	{
-	putchar(format[i]);
-	len++;
-	}
-	i++;
-	}
-	va_end(args);
-	return (len);
+	va_end(ap);
+	return (j);
 }

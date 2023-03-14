@@ -13,6 +13,6 @@ written in vi, vim, or emacs
 
 compiled with the following gcc -Wall -Wextra -Werror -pedantic -std=gnu89 -Wno-format *.c
 
-No more than five functions per file
+No more than five functions per file*
 
 learning* to use multiple functions in use of a variadic function  and passing the logic using format sepcifiers.

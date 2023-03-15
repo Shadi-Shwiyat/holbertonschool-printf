@@ -19,7 +19,7 @@ typedef struct print
 } print_t;
 
 int _printf(const char *format, ...);
-int get_printf(const char c, va_list ap);
+int get_func(const char c, va_list ap);
 
 int pchar(va_list arg);
 int pstr(va_list arg);

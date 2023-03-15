@@ -5,10 +5,10 @@
  * @c: char
  * Return: char
  */
-int get_printf(const char c, va_list ap)
+int get_func(const char c, va_list arg)
 {
 	int i = 0;
-	int j = 0;
+	int len = 0;
 	print_t type[] = {
 		{'c', pchar},
 		{'s', pstr},
@@ -23,8 +23,8 @@ int get_printf(const char c, va_list ap)
 	{
 		if (type[i].t == c)
 		{
-			j += type[i].f(ap);
-			return (j);
+			len += type[i].f(arg);
+			return (len);
 		}
 		i++;
 	}

@@ -29,11 +29,6 @@ int _printf(const char *format, ...)
 				len += ret;
 			i += 2;
 			continue;
-			if (*(format + (i + 1)) == '\0')
-			{
-				putchar(format[i]);
-				len++;
-			}
 		}
 		else if ((format[i] == '%' && format[i + 1] == 'K') ||
 		 (format[i] == '%' && format[i + 1] == '!'))
